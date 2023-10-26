@@ -1,0 +1,200 @@
+<!-- Start block -->
+<div *ngIf="isLoading">loading...</div>
+<section
+  *ngIf="!isLoading"
+  class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased"
+>
+  <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+    <!-- Start coding here -->
+    <div
+      class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden"
+    >
+      <!-- Start Header -->
+      <div
+        class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"
+      >
+        <!-- search bar -->
+        <div class="w-full md:w-1/2">
+          <form class="flex items-center">
+            <label for="category-search" class="sr-only">Search</label>
+            <div class="relative w-full">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+              >
+                <i
+                  class="bx bx-search-alt-2 text-xl text-gray-500 dark:text-gray-400"
+                ></i>
+              </div>
+              <input
+                type="text"
+                id="category-search"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Search"
+                required
+              />
+            </div>
+          </form>
+        </div>
+
+        <!-- Add User Link -->
+        <div
+          class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
+        >
+          <a
+            routerLink="/admin/users/add"
+            class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            <i class="bx bx-plus mr-2"></i>
+            Add User
+          </a>
+        </div>
+      </div>
+      <!-- Start Header -->
+
+      <!-- Start Table -->
+      <div class="overflow-x-auto">
+        <table
+          class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
+          <!-- Start Table Head  -->
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-4 py-3">Profile Image</th>
+              <th scope="col" class="px-4 py-4">name</th>
+              <th scope="col" class="px-4 py-3">email</th>
+              <th scope="col" class="px-4 py-3">role</th>
+              <th scope="col" class="px-4 py-3">active</th>
+              <th scope="col" class="px-4 py-3">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <!-- End Table Head -->
+
+          <!-- Start Table Body -->
+          <tbody>
+            <tr
+              *ngFor="let user of users; let i = index"
+              class="border-b dark:border-gray-700"
+            >
+              <!-- user img -->
+              <td class="px-4 py-3">
+                <img
+                  src="{{ user.profileImg }}"
+                  alt="{{ user.name }}"
+                  class="max-w-[40px] max-h-[40px] rounded-lg"
+                />
+              </td>
+              <!-- user name -->
+              <th
+                scope="row"
+                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {{ user.name }}
+              </th>
+
+              <!-- user email -->
+              <td class="px-4 py-3">{{ user.email }}</td>
+              <!-- user role -->
+              <td class="px-4 py-3">{{ user.role }}</td>
+              <!-- user active -->
+              <td class="px-4 py-3">{{ user.active }}</td>
+
+              <!-- Action Btns -->
+              <td class="relative px-4 py-3 flex items-center justify-end">
+                <button
+                  class="inline-flex items-center text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                  type="button"
+                  (click)="toggleDropdown(i)"
+                >
+                  <i class="bx bx-dots-horizontal-rounded bx-sm"></i>
+                </button>
+                <div
+                  *ngIf="isDropdownOpen[i]"
+                  (click)="toggleDropdown(i)"
+                  class="absolute right-12 top-8 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                >
+                  <ul class="py-1 text-sm">
+                    <!-- edit link -->
+                    <li>
+                      <a
+                        routerLink="/admin/users/edit/{{ user._id }}"
+                        class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
+                      >
+                        <i class="bx bx-edit mr-2"></i>
+                        Edit
+                      </a>
+                    </li>
+
+                    <!-- delete Btn  -->
+                    <li>
+                      <button
+                        (click)="deleteUser(user._id)"
+                        type="button"
+                        class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 text-red-500 dark:hover:text-red-400"
+                      >
+                        <i class="bx bx-trash mr-2"></i>
+                        Delete
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <!-- End Table Body -->
+        </table>
+      </div>
+      <!-- End Table -->
+
+      <!-- start paggination -->
+      <nav
+        class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+        aria-label="Table navigation"
+      >
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+          Showing
+          <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
+          of
+          <span class="font-semibold text-gray-900 dark:text-white">
+            {{ numberOfDocuments }}
+          </span>
+        </span>
+        <ul class="inline-flex items-stretch -space-x-px">
+          <li>
+            <button
+              [disabled]="!prevPage"
+              (click)="getPrevPage()"
+              class="{{
+                !prevPage
+                  ? 'opacity-50'
+                  : 'cursor-pointer hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white'
+              }} flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 "
+            >
+              <span class="sr-only">Previous</span>
+              <i class="bx bx-chevron-left"></i>
+            </button>
+          </li>
+          <li>
+            <button
+              [disabled]="!nextPage"
+              (click)="getNextPage()"
+              class="{{
+                !nextPage
+                  ? 'opacity-50'
+                  : 'cursor-pointer hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white'
+              }} flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 "
+            >
+              <span class="sr-only">Next</span>
+              <i class="bx bx-chevron-right"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <!-- end paggination -->
+    </div>
+  </div>
+</section>
+<!-- End block -->

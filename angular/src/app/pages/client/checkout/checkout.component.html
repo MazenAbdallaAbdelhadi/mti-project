@@ -1,0 +1,136 @@
+<section class="bg-white dark:bg-gray-900">
+  <div class="py-8 px-12 mx-auto w-full lg:py-16">
+    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+      Checkout
+    </h2>
+    <!-- cart container -->
+    <div class="flex justify-between gap-4 w-full">
+      <div class="flex-1">
+        <h3 class="text-2xl mb-4">Cart</h3>
+        <div
+          class="flex justify-between items-center gap-3 mb-4 bg-gray-100 p-2 rounded-md"
+          *ngFor="let item of items"
+        >
+          <div class="flex gap-3">
+            <img
+              class="w-12 h-12 rounded-md"
+              src="{{ item.product.imageCover }}"
+              alt="{{ item.product.title }}"
+            />
+            <div>
+              <p>{{ item.product.title }}</p>
+              <p>{{ item.price }}$</p>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <div class="flex justify-between items-center gap-2">
+              <button
+                (click)="cart.decQuantity(item.product._id)"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm w-8 h-8 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              >
+                -
+              </button>
+              <p class="h-8">{{ item.quantity }}</p>
+              <button
+                (click)="cart.addProduct(item.product)"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm w-8 h-8 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              >
+                +
+              </button>
+            </div>
+            <button
+              (click)="cart.removeProduct(item.product._id)"
+              type="button"
+              class="text-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+            >
+              <i class="bx bx-x bx-sm"></i>
+              <span class="sr-only">remove item</span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <span class="text-xl"
+            >Total Price: {{ "" + cart.getTotalPrice() }}$</span
+          >
+        </div>
+      </div>
+
+      <form [formGroup]="shippingAddressForm" (ngSubmit)="onSubmit()">
+        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+          <!-- phone -->
+          <div class="w-full">
+            <label
+              for="phone"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >phone</label
+            >
+            <input
+              formControlName="phone"
+              type="tel"
+              name="phone"
+              id="phone"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="012345678901"
+              required
+            />
+          </div>
+          <!-- city -->
+          <div class="w-full">
+            <label
+              for="city"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >city</label
+            >
+            <input
+              formControlName="city"
+              type="text"
+              name="city"
+              id="city"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="eg:Cairo"
+              required
+            />
+          </div>
+          <!-- postalCode -->
+          <div class="w-full">
+            <label
+              for="postalCode"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >postalCode</label
+            >
+            <input
+              formControlName="postalCode"
+              type="number"
+              name="postalCode"
+              id="postalCode"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="xxxxxx"
+              required
+            />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label
+              for="description"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >details</label
+            >
+            <textarea
+              formControlName="details"
+              id="details"
+              rows="8"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Your details"
+            ></textarea>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+        >
+          Checkout
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

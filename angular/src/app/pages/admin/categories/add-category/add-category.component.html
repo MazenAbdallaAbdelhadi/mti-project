@@ -1,0 +1,142 @@
+<section class="bg-gray-50 dark:bg-gray-900">
+  <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+      Add a new Category
+    </h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+        <!-- Category name input -->
+        <div class="sm:col-span-2">
+          <label
+            for="name"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Category Name</label
+          >
+          <input
+            formControlName="name"
+            type="text"
+            name="name"
+            id="name"
+            class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Category name"
+            required
+          />
+
+          <div *ngIf="form.controls.name.invalid && form.controls.name.touched">
+            <div
+              class="text-red-600"
+              *ngIf="form.controls.name.errors?.['required']"
+            >
+              name is required.
+            </div>
+
+            <div
+              class="text-red-600"
+              *ngIf="form.controls.name.errors?.['minlength']"
+            >
+              name is too short.
+            </div>
+
+            <div
+              class="text-red-600"
+              *ngIf="form.controls.name.errors?.['maxlength']"
+            >
+              name is too long.
+            </div>
+          </div>
+        </div>
+
+        <!-- Category description input -->
+        <div class="sm:col-span-2">
+          <label
+            for="description"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Category Description</label
+          >
+          <textarea
+            formControlName="description"
+            id="description"
+            rows="8"
+            class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Your description here"
+          ></textarea>
+
+          <div
+            *ngIf="
+              form.controls.description.invalid &&
+              form.controls.description.touched
+            "
+          >
+            <div
+              class="text-red-600"
+              *ngIf="form.controls.description.errors?.['required']"
+            >
+              name is required.
+            </div>
+
+            <div
+              class="text-red-600"
+              *ngIf="form.controls.description.errors?.['minlength']"
+            >
+              name is too short.
+            </div>
+          </div>
+        </div>
+
+        <!-- file input -->
+        <div class="sm:col-span-2 flex items-center justify-center w-full">
+          <label
+            for="dropzone-file"
+            class="flex flex-col items-center justify-center w-full h-auto bg-white border-2 border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          >
+            <img
+              *ngIf="form.value.image"
+              src="{{ imageSrc }}"
+              alt="Preview Uploaded Image"
+              id="file-preview"
+              class="h-full w-full rounded-lg"
+            />
+            <div
+              *ngIf="!form.value.image"
+              class="flex flex-col items-center justify-center pt-5 pb-6"
+            >
+              <i
+                class="bx bx-cloud-upload bx-md w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+              ></i>
+
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">Click to upload</span> or drag and
+                drop
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                SVG, PNG, JPG or GIF (MAX. 800x400px)
+              </p>
+            </div>
+            <input
+              #filePicker
+              (change)="onImagePicked($event)"
+              id="dropzone-file"
+              type="file"
+              class="hidden"
+            />
+          </label>
+        </div>
+        <div *ngIf="form.controls.image.invalid">
+          <div
+            class="text-red-600"
+            *ngIf="form.controls.image.errors?.['required']"
+          >
+            name is required.
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
+      >
+        Add Category
+      </button>
+    </form>
+  </div>
+</section>
